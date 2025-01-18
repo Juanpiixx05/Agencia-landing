@@ -1,0 +1,210 @@
+---
+const backgroundImages = [
+  '/images/service1.jpg',
+  '/images/service2.png',
+  '/images/service3.jpg',
+  '/images/service4.jpg'
+];
+---
+
+<section class="hero">
+  <div class="background-container">
+    <div class="overlay"></div>
+    {backgroundImages.map((image, index) => (
+      <div class="background-image" data-index={index} style={`background-image: url(${image});`}></div>
+    ))}
+  </div>
+  <div class="container">
+    <div class="text-content">
+      <h1>
+        <span class="text-reveal fade-in">Somos un estudio creativo global.</span>
+        <span class="text-reveal fade-in fade-in-delay-1">No hacemos soluciones genéricas.</span>
+      </h1>
+      <a href="/about" class="cta-link fade-in fade-in-delay-2">
+        Conócenos
+        <span class="arrow">→</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: var(--spacing-xl) 0;
+    margin-top: -80px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .background-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+  }
+
+  .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 1;
+  }
+
+  .background-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    transform: scale(1.1);
+    will-change: transform;
+    visibility: hidden;
+  }
+
+  .background-image.active {
+    opacity: 1;
+    transform: scale(1);
+    visibility: visible;
+  }
+
+  .container {
+    position: relative;
+    z-index: 2;
+  }
+
+  .text-content {
+    max-width: 900px;
+    color: var(--color-secondary);
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    margin-top: 40px;
+  }
+
+  h1 {
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    margin-bottom: var(--spacing-lg);
+  }
+
+  h1 span {
+    display: block;
+    margin-bottom: 0.5em;
+  }
+
+  .cta-link {
+    font-size: 1.2rem;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5em;
+    position: relative;
+    padding-bottom: 4px;
+    color: var(--color-secondary);
+  }
+
+  .arrow {
+    transition: transform var(--transition-normal) var(--ease-out-expo);
+  }
+
+  .cta-link:hover .arrow {
+    transform: translateX(8px);
+  }
+
+  .cta-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background-color: var(--color-secondary);
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform var(--transition-normal) var(--ease-out-expo);
+  }
+
+  .cta-link:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+
+  @media (max-width: 768px) {
+    .hero {
+      padding: var(--spacing-lg) 0;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+    }
+
+    .cta-link {
+      font-size: 1rem;
+    }
+  }
+</style>
+
+<script>
+  let currentImageIndex = 0;
+  const images = document.querySelectorAll('.background-image') as NodeListOf<HTMLElement>;
+  const hero = document.querySelector('.hero') as HTMLElement;
+  let mouseX = 0;
+  let lastMouseX = mouseX;
+  let lastTimestamp = Date.now();
+  const MOVEMENT_THRESHOLD = 50; // Umbral para detectar movimiento
+  const totalImages = images.length;
+
+  // Activar la primera imagen
+  if (images.length > 0) {
+    images[0].classList.add('active');
+  }
+
+  // Función para cambiar la imagen basado en la posición del mouse
+  function changeImageBasedOnMousePosition(mouseX) {
+    const heroWidth = hero.clientWidth;
+    const sectionWidth = heroWidth / totalImages;
+    let newImageIndex = Math.floor(mouseX / sectionWidth);
+
+    // Asegurarse de que el índice esté dentro del rango
+    if (newImageIndex < 0) newImageIndex = 0;
+    if (newImageIndex >= totalImages) newImageIndex = totalImages - 1;
+
+    // Solo cambiar si la imagen es diferente
+    if (newImageIndex !== currentImageIndex) {
+      images[currentImageIndex].classList.remove('active');
+      currentImageIndex = newImageIndex;
+      images[currentImageIndex].classList.add('active');
+    }
+  }
+
+  if (hero) {
+    hero.addEventListener('mousemove', function(this: HTMLElement, e: MouseEvent): void {
+      const newMouseX = e.clientX;
+      const currentTime = Date.now();
+      const timeDiff = currentTime - lastTimestamp;
+      const distance = newMouseX - lastMouseX;
+      const speed = Math.abs(distance / timeDiff); // Speed in pixels per millisecond
+
+      // Define a speed threshold
+      const SPEED_THRESHOLD = 0.5; // Adjust this value as needed
+
+      // Change image based on speed
+      if (speed > SPEED_THRESHOLD) {
+        changeImageBasedOnMousePosition(newMouseX);
+      }
+
+      lastMouseX = newMouseX;
+      lastTimestamp = currentTime;
+    }, { passive: true });
+  }
+</script>
