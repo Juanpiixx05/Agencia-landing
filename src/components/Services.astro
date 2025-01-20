@@ -9,7 +9,7 @@ const services = [
   {
     title: "Branding",
     category: "Identidad visual única y coherente",
-    image: "/images/service2.png",
+    image: "/images/service2.jpg",
     link: "/services/service2"
   },
   {
@@ -39,16 +39,16 @@ const services = [
         <a href={service.link} class="service-card" data-index={index}>
           <div class="service-image">
             <img src={service.image} alt={service.title} loading="lazy" />
-          </div>
-          <div class="service-info">
-            <h3>{service.title}</h3>
-            <p>{service.category}</p>
+            <div class="service-info">
+              <h3>{service.title}</h3>
+              <p>{service.category}</p>
+            </div>
           </div>
         </a>
       ))}
     </div>
 
-    <div class="manifesto">
+    <div class="manifesto fade-in">
       <p class="fade-in">Creamos soluciones únicas, historias y experiencias que las audiencias aman.</p>
       <p class="fade-in">Porque las soluciones que aman no solo inspiran. Construyen lealtad, entregan valor y generan crecimiento.</p>
       <p class="fade-in">Usamos la creatividad para servir a tus ambiciones comerciales.</p>
@@ -109,8 +109,8 @@ const services = [
   }
 
   .service-image {
-    aspect-ratio: 16/9;
     position: relative;
+    overflow: hidden;
   }
 
   .service-image img {
@@ -118,11 +118,17 @@ const services = [
     height: 100%;
     object-fit: cover;
     transform: scale(1);
-    transition: transform 0.6s var(--ease-out-expo);
+    transition: filter 0.3s ease, transform 0.6s var(--ease-out-expo);
   }
 
-  .service-card:hover .service-image img {
+  .service-image:hover img {
+    filter: blur(5px);
     transform: scale(1.05);
+  }
+
+  .service-image:hover {
+    backdrop-filter: blur(10px);
+    position: relative;
   }
 
   .service-info {
@@ -131,14 +137,13 @@ const services = [
     left: 50%;
     transform: translate(-50%, -50%);
     color: white;
+    text-align: center;
+    background: none;
+    padding: 0;
     z-index: 1;
     opacity: 0;
     visibility: hidden;
     transition: opacity 0.3s ease, visibility 0.3s ease;
-    backdrop-filter: blur(10px); /* Glass blur effect */
-    padding: 10px;
-    border-radius: 8px;
-    background: rgba(255, 255, 255, 0.2); /* Semi-transparent background */
   }
 
   .service-card:hover .service-info {
@@ -152,6 +157,8 @@ const services = [
     text-align: center;
     font-size: 1.5rem;
     line-height: 1.4;
+    padding: 40px;
+    margin-top: 40px;
   }
 
   .manifesto p {
@@ -164,6 +171,15 @@ const services = [
   .manifesto p:nth-child(1) { animation-delay: 0.8s; }
   .manifesto p:nth-child(2) { animation-delay: 1s; }
   .manifesto p:nth-child(3) { animation-delay: 1.2s; }
+
+  .fade-in {
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+  }
+
+  .fade-in.visible {
+    opacity: 1;
+  }
 
   @keyframes fadeIn {
     from {
@@ -198,22 +214,18 @@ const services = [
 </style>
 
 <script>
-  // Opcional: Reiniciar animaciones cuando el componente entra en vista
+  document.querySelector('.manifesto').classList.add('fade-in');
+
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
-        const target = entry.target as HTMLElement;
-        target.style.animation = '';
-        target.offsetHeight; // Trigger reflow
-        target.style.animation = '';
-        observer.unobserve(target);
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
       }
     });
   }, {
-    threshold: 0.1
+    threshold: 1.0
   });
 
-  document.querySelectorAll('.fade-in, .service-card, .manifesto p').forEach((el) => {
-    observer.observe(el);
-  });
+  observer.observe(document.querySelector('.manifesto'));
 </script>
