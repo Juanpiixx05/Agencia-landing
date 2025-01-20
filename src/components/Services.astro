@@ -214,7 +214,10 @@ const services = [
 </style>
 
 <script>
-  document.querySelector('.manifesto').classList.add('fade-in');
+  const manifestoElement = document.querySelector('.manifesto');
+  if (manifestoElement !== null && manifestoElement.classList) {
+    manifestoElement.classList.add('fade-in');
+  }
 
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
@@ -227,5 +230,9 @@ const services = [
     threshold: 1.0
   });
 
-  observer.observe(document.querySelector('.manifesto'));
+  if (manifestoElement !== null && manifestoElement.classList) {
+    observer.observe(manifestoElement);
+  } else {
+    console.warn('Element .manifesto not found');
+  }
 </script>
