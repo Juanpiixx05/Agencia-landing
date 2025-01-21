@@ -1,18 +1,14 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Navbar from '../components/Navbar.astro';
-import Hero from '../components/Hero.astro';
-import Services from '../components/Services.astro';
-import ContactForm from '../components/ContactForm.astro';
+import Projects from '../components/Projects.astro';
 import Footer from '../components/Footer.astro';
 ---
 
-<Layout title="Estudio Creativo Digital">
+<Layout title="Proyectos - EterCore">
   <Navbar />
   <main>
-    <Hero />
-    <Services />
-    <ContactForm />
+    <Projects />
   </main>
   <Footer />
 </Layout>
@@ -21,5 +17,6 @@ import Footer from '../components/Footer.astro';
   main {
     width: 100%;
     overflow: hidden;
+    padding-top: 80px; /* Adjust based on navbar height */
   }
 </style>
