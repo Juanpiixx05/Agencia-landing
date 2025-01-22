@@ -1,0 +1,82 @@
+---
+// src/components/About.astro
+---
+
+<section class="about-section">
+  <div class="container">
+    <h2 class="section-title">Nuestra Filosofía</h2>
+    <div class="about-content">
+      <div class="about-text">
+        <p>En EterCore, abrazamos la filosofía estoica como nuestra guía fundamental. Creemos que el verdadero diseño web no es solo sobre la estética, sino sobre la resiliencia, la claridad y el propósito.</p>
+        
+        <h3>Control y Aceptación</h3>
+        <p>Distinguimos meticulosamente entre lo que podemos controlar en un proyecto digital y lo que está fuera de nuestro alcance. Nos enfocamos en nuestra creatividad, dedicación y habilidad técnica, aceptando que los resultados finales son una combinación de nuestro esfuerzo y factores externos.</p>
+        
+        <h3>Virtud en el Diseño</h3>
+        <p>Para nosotros, la virtud en el diseño web significa:</p>
+        <ul>
+          <li>Integridad en el código</li>
+          <li>Transparencia en la comunicación</li>
+          <li>Excelencia técnica</li>
+          <li>Soluciones centradas en el usuario</li>
+        </ul>
+        
+        <h3>Adaptabilidad Estoica</h3>
+        <p>Como los estoicos enseñan, nos adaptamos con calma a los cambios tecnológicos. Cada desafío es una oportunidad para crecer, aprender y mejorar nuestras habilidades.</p>
+      </div>
+      <div class="about-image">
+        <img src="/images/filosofia-etercore.jpg" alt="Filosofía EterCore" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .about-section {
+    background-color: #f9f9f9;
+    padding: 4rem 0;
+  }
+
+  .about-content {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .about-text {
+    flex: 1;
+  }
+
+  .about-image {
+    flex: 1;
+  }
+
+  .about-image img {
+    width: 100%;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  .section-title {
+    text-align: center;
+    margin-bottom: 2rem;
+    color: #333;
+  }
+
+  .about-text h3 {
+    margin-top: 1.5rem;
+    color: #007bff;
+  }
+
+  .about-text ul {
+    list-style-type: disc;
+    padding-left: 2rem;
+    margin-bottom: 1rem;
+  }
+
+  @media (max-width: 768px) {
+    .about-content {
+      flex-direction: column;
+    }
+  }
+</style>
