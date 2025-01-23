@@ -1,15 +1,14 @@
 ---
-// src/pages/sobre-nosotros.astro
 import Layout from '../layouts/Layout.astro';
-import About from '../components/About.astro';
 import Navbar from '../components/Navbar.astro';
+import ServiciosPage from '../components/ServiciosPage.astro';
 import Footer from '../components/Footer.astro';
 ---
 
-<Layout title="Sobre Nosotros - EterCore">
+<Layout title="Servicios - EterCore">
   <Navbar />
   <main>
-    <About />
+    <ServiciosPage />
   </main>
   <Footer />
 </Layout>
@@ -19,9 +18,5 @@ import Footer from '../components/Footer.astro';
     width: 100%;
     overflow: hidden;
     padding-top: 80px; /* Adjust based on navbar height */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
   }
 </style>
