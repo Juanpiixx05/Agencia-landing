@@ -24,6 +24,7 @@ const { title } = Astro.props;
   </body>
 </html>
 
+<!-- CHATBOT  -->
 <script>
 window.addEventListener('mouseover', initLandbot, { once: true });
 window.addEventListener('touchstart', initLandbot, { once: true });
@@ -34,17 +35,27 @@ function initLandbot() {
     s.type = "module"
     s.async = true;
     s.addEventListener('load', function() {
-      var myLandbot = new Landbot.Livechat({
+      var myLandbot = new myLandbot.Livechat({
         configUrl: 'https://storage.googleapis.com/landbot.online/v3/H-2757457-M3YAP6MX84JDE7WS/index.json',
       });
     });
     s.src = 'https://cdn.landbot.io/landbot-3/landbot-3.0.0.mjs';
     var x = document.getElementsByTagName('script')[0];
-    x.parentNode.insertBefore(s, x);
+    if (x !== null) {
+      const parent = x.parentNode;
+      if (parent !== null) {
+        parent.insertBefore(s, x);
+      } else {
+        console.error('Parent element is null');
+      }
+    } else {
+      console.error('Element x is null');
+    }
   }
 }
 </script>
 
+<!-- ESTILOS GLOBALES  -->
 <style is:global>
   :root {
     --color-primary: #000000;
