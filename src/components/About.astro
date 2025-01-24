@@ -1,15 +1,16 @@
 ---
-// src/components/About.astro
+// About section component
 ---
-
 <section class="about-section">
   <div class="container">
     <h2 class="section-title">Nuestra Filosofía</h2>
     <div class="about-content">
       <div class="about-text">
+        <!-- Description of the company's philosophy and approach to web design -->
         <p>En EterCore, abrazamos la filosofía estoica como nuestra guía fundamental. Creemos que el verdadero diseño web no es solo sobre la estética, sino sobre la resiliencia, la claridad y el propósito.</p>
         
         <h3>Control y Aceptación</h3>
+        <!-- Explanation of the importance of distinguishing between controllable and uncontrollable factors in projects -->
         <p>Distinguimos meticulosamente entre lo que podemos controlar en un proyecto digital y lo que está fuera de nuestro alcance. Nos enfocamos en nuestra creatividad, dedicación y habilidad técnica, aceptando que los resultados finales son una combinación de nuestro esfuerzo y factores externos.</p>
         
         <h3>Virtud en el Diseño</h3>
@@ -22,9 +23,11 @@
         </ul>
         
         <h3>Adaptabilidad Estoica</h3>
+        <!-- Emphasis on adaptability to technological changes as a core value -->
         <p>Como los estoicos enseñan, nos adaptamos con calma a los cambios tecnológicos. Cada desafío es una oportunidad para crecer, aprender y mejorar nuestras habilidades.</p>
       </div>
       <div class="about-image">
+        <!-- Image representing the company's philosophy -->
         <img src="/images/filosofia-etercore.jpg" alt="Filosofía EterCore" />
       </div>
     </div>
@@ -32,21 +35,25 @@
 </section>
 
 <style>
+  /* Styles for the about section */
   .about-section {
     background-color: #f9f9f9;
     padding: 4rem 0;
   }
 
+  /* Layout styles for the about content */
   .about-content {
     display: flex;
     align-items: center;
     gap: 2rem;
   }
 
+  /* Text styles for the about text */
   .about-text {
     flex: 1;
   }
 
+  /* Styles for the about image */
   .about-image {
     flex: 1;
   }
@@ -57,23 +64,27 @@
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   }
 
+  /* Section title styles */
   .section-title {
     text-align: center;
     margin-bottom: 2rem;
     color: #333;
   }
 
+  /* Heading styles within the about text */
   .about-text h3 {
     margin-top: 1.5rem;
     color: #007bff;
   }
 
+  /* Styles for unordered list in about text */
   .about-text ul {
     list-style-type: disc;
     padding-left: 2rem;
     margin-bottom: 1rem;
   }
 
+  /* Responsive styles for smaller screens */
   @media (max-width: 768px) {
     .about-content {
       flex-direction: column;

@@ -1,4 +1,5 @@
 ---
+// Array of services, each containing title, category, image, and link.
 const services = [
   {
     title: "Diseño UI/UX",
@@ -35,6 +36,7 @@ const services = [
     </header>
 
     <div class="services-grid">
+      {/* Mapping through the services array to create a card for each service */}
       {services.map((service, index) => (
         <a href={service.link} class="service-card" data-index={index}>
           <div class="service-image">
@@ -47,7 +49,7 @@ const services = [
         </a>
       ))}
     </div>
-<!-- CUERPO DE LA PAGINA -->
+    <!-- Manifesto section explaining the company's mission and vision -->
     <div class="manifesto fade-in">
       <p class="fade-in">Creamos soluciones únicas, historias y experiencias que las audiencias aman.</p>
       <p class="fade-in">Porque las soluciones que aman no solo inspiran. Construyen lealtad, entregan valor y generan crecimiento.</p>
@@ -57,6 +59,7 @@ const services = [
 </section>
 
 <style>
+  /* Styles for the services section */
   .services {
     padding: var(--spacing-xl) 0;
   }
@@ -214,11 +217,13 @@ const services = [
 </style>
 
 <script>
+  // Adding fade-in class to the manifesto element for animation
   const manifestoElement = document.querySelector('.manifesto');
   if (manifestoElement !== null && manifestoElement.classList) {
     manifestoElement.classList.add('fade-in');
   }
 
+  // Intersection observer to trigger animations when the manifesto comes into view
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
@@ -230,6 +235,7 @@ const services = [
     threshold: 1.0
   });
 
+  // Observing the manifesto element
   if (manifestoElement !== null && manifestoElement.classList) {
     observer.observe(manifestoElement);
   } else {

@@ -1,4 +1,5 @@
 ---
+// Main entry point for the application, using various components
 import Layout from '../layouts/Layout.astro';
 import Navbar from '../components/Navbar.astro';
 import Hero from '../components/Hero.astro';
@@ -8,16 +9,22 @@ import Footer from '../components/Footer.astro';
 ---
 
 <Layout title="EterCore - Diseño y Desarrollo Web">
+  <!-- Navbar component for site navigation -->
   <Navbar />
   <main>
+    <!-- Hero section showcasing the main message -->
     <Hero />
+    <!-- Services section displaying the services offered -->
     <Services />
+    <!-- Contact form for user inquiries -->
     <ContactForm />
   </main>
+  <!-- Footer component for additional links and copyright information -->
   <Footer />
 </Layout>
 
 <style>
+  /* Styles for the main content area */
   main {
     width: 100%;
     overflow: hidden;
