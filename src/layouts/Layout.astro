@@ -1,5 +1,8 @@
 ---
 // Layout component for the entire application
+import '../styles/typography.css';
+import 'tailwindcss/tailwind.css';
+
 interface Props {
   title: string;
 }
@@ -11,17 +14,17 @@ const { title } = Astro.props;
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
-    <meta name="description" content="Estudio creativo digital especializado en diseño web y branding">
+    <meta name="description" content="Agencia de servicios digitales" />
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
     <!-- Preconnecting to Google Fonts for better performance -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   </head>
-  <body>
+  <body class="font-sans bg-white dark:bg-gray-900 text-gray-900 dark:text-white">
     <!-- Main content will be injected here -->
     <slot />
   </body>
