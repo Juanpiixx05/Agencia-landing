@@ -1,4 +1,5 @@
 ---
+// Array of background images to be displayed in the hero section.
 const backgroundImages = [
   '/images/service1.jpg',
   '/images/service2.jpg',
@@ -10,6 +11,7 @@ const backgroundImages = [
 <section id="inicio" class="hero">
   <div class="background-container">
     <div class="overlay"></div>
+    {/* Mapping through the background images to create a div for each image */}
     {backgroundImages.map((image, index) => (
       <div class="background-image" data-index={index} style={`background-image: url(${image});`}></div>
     ))}
@@ -32,6 +34,7 @@ const backgroundImages = [
 </section>
 
 <style>
+  /* Styles for the hero section */
   .hero {
     min-height: 100vh;
     display: flex;
@@ -42,6 +45,7 @@ const backgroundImages = [
     overflow: hidden;
   }
 
+  /* Background container styles */
   .background-container {
     position: absolute;
     top: 0;
@@ -51,6 +55,7 @@ const backgroundImages = [
     z-index: -1;
   }
 
+  /* Overlay styles for darkening the background images */
   .overlay {
     position: absolute;
     top: 0;
@@ -61,6 +66,7 @@ const backgroundImages = [
     z-index: 1;
   }
 
+  /* Background image styles */
   .background-image {
     position: absolute;
     top: 0;
@@ -75,17 +81,20 @@ const backgroundImages = [
     visibility: hidden;
   }
 
+  /* Active background image styles */
   .background-image.active {
     opacity: 1;
     transform: scale(1);
     visibility: visible;
   }
 
+  /* Container for text content */
   .container {
     position: relative;
     z-index: 2;
   }
 
+  /* Text content styles */
   .text-content {
     max-width: 900px;
     color: var(--color-secondary);
@@ -93,6 +102,7 @@ const backgroundImages = [
     margin-top: 40px;
   }
 
+  /* Heading styles */
   h1 {
     font-weight: 500;
     letter-spacing: -0.02em;
@@ -105,6 +115,7 @@ const backgroundImages = [
     margin-bottom: 0.5em;
   }
 
+  /* Call-to-action link styles */
   .cta-link {
     font-size: 1.2rem;
     font-weight: 500;
@@ -116,14 +127,17 @@ const backgroundImages = [
     color: var(--color-secondary);
   }
 
+  /* Arrow transition effect */
   .arrow {
     transition: transform var(--transition-normal) var(--ease-out-expo);
   }
 
+  /* Arrow hover effect */
   .cta-link:hover .arrow {
     transform: translateX(8px);
   }
 
+  /* Underline effect for call-to-action links */
   .cta-link::after {
     content: '';
     position: absolute;
@@ -137,11 +151,13 @@ const backgroundImages = [
     transition: transform var(--transition-normal) var(--ease-out-expo);
   }
 
+  /* Underline hover effect */
   .cta-link:hover::after {
     transform: scaleX(1);
     transform-origin: left;
   }
 
+  /* Responsive styles */
   @media (max-width: 768px) {
     .hero {
       padding: var(--spacing-lg) 0;
@@ -158,6 +174,7 @@ const backgroundImages = [
 </style>
 
 <script>
+  // Initialize variables to keep track of the current image index and mouse position
   let currentImageIndex = 0;
   const images = document.querySelectorAll('.background-image') as NodeListOf<HTMLElement>;
   const hero = document.querySelector('.hero') as HTMLElement;
@@ -167,22 +184,22 @@ const backgroundImages = [
   const MOVEMENT_THRESHOLD = 50; // Umbral para detectar movimiento
   const totalImages = images.length;
 
-  // Activar la primera imagen
+  // Activate the first image by default
   if (images.length > 0) {
     images[0].classList.add('active');
   }
 
-  // Función para cambiar la imagen basado en la posición del mouse
+  // Function to change the image based on the mouse position
   function changeImageBasedOnMousePosition(mouseX) {
     const heroWidth = hero.clientWidth;
     const sectionWidth = heroWidth / totalImages;
     let newImageIndex = Math.floor(mouseX / sectionWidth);
 
-    // Asegurarse de que el índice esté dentro del rango
+    // Ensure the new image index is within the valid range
     if (newImageIndex < 0) newImageIndex = 0;
     if (newImageIndex >= totalImages) newImageIndex = totalImages - 1;
 
-    // Solo cambiar si la imagen es diferente
+    // Only change the image if it's different from the current one
     if (newImageIndex !== currentImageIndex) {
       images[currentImageIndex].classList.remove('active');
       currentImageIndex = newImageIndex;
@@ -190,6 +207,7 @@ const backgroundImages = [
     }
   }
 
+  // Add event listener to the hero section to track mouse movement
   if (hero) {
     hero.addEventListener('mousemove', function(this: HTMLElement, e: MouseEvent): void {
       const newMouseX = e.clientX;
@@ -198,10 +216,10 @@ const backgroundImages = [
       const distance = newMouseX - lastMouseX;
       const speed = Math.abs(distance / timeDiff); // Speed in pixels per millisecond
 
-      // Define a speed threshold
+      // Define a speed threshold to determine when to change the image
       const SPEED_THRESHOLD = 0.5; // Adjust this value as needed
 
-      // Change image based on speed
+      // Change the image based on the speed
       if (speed > SPEED_THRESHOLD) {
         changeImageBasedOnMousePosition(newMouseX);
       }

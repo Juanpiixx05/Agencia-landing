@@ -1,63 +1,74 @@
 ---
-// src/components/ContactForm.astro
+// Contact Form component
 ---
-
 <section id="contacto" class="contact-form-section">
   <div class="container">
     <h2>Contáctanos</h2>
+    <!-- Form action points to an email service for handling submissions -->
     <form action="https://formsubmit.co/juanpibarrientos12@gmail.com" method="POST" class="contact-form">
       <div class="form-group">
         <label for="name">Nombre</label>
+        <!-- Input field for the user's name -->
         <input type="text" id="name" name="name" required />
       </div>
       <div class="form-group">
         <label for="email">Email</label>
+        <!-- Input field for the user's email -->
         <input type="email" id="email" name="email" required />
       </div>
       <div class="form-group">
         <label for="message">Mensaje</label>
+        <!-- Textarea for the user's message -->
         <textarea id="message" name="message" required></textarea>
       </div>
+      <!-- Submit button for the form -->
       <button type="submit" class="submit-btn">Enviar Mensaje</button>
     </form>
   </div>
 </section>
 
 <style>
+  /* Styles for the contact form section */
   .contact-form-section {
     background-color: #f4f4f4;
     padding: 4rem 0;
     text-align: center;
   }
 
+  /* Container styles for centering the form */
   .container {
     max-width: 600px;
     margin: 0 auto;
     padding: 0 1rem;
   }
 
+  /* Styles for the contact form layout */
   .contact-form {
     display: flex;
     flex-direction: column;
     gap: 1rem;
   }
 
+  /* Styles for each form group */
   .form-group {
     display: flex;
     flex-direction: column;
     text-align: left;
   }
 
+  /* Input and textarea styles */
   input, textarea {
     padding: 0.5rem;
     border: 1px solid #ccc;
     border-radius: 4px;
   }
 
+  /* Textarea minimum height */
   textarea {
     min-height: 150px;
   }
 
+  /* Styles for the submit button */
   .submit-btn {
     background-color: #007bff;
     color: white;
@@ -68,6 +79,7 @@
     transition: background-color 0.3s ease;
   }
 
+  /* Hover effect for the submit button */
   .submit-btn:hover {
     background-color: #0056b3;
   }

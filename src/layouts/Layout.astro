@@ -1,4 +1,5 @@
 ---
+// Layout component for the entire application
 interface Props {
   title: string;
 }
@@ -15,37 +16,53 @@ const { title } = Astro.props;
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
+    <!-- Preconnecting to Google Fonts for better performance -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   </head>
   <body>
+    <!-- Main content will be injected here -->
     <slot />
   </body>
 </html>
 
+<!-- CHATBOT -->
 <script>
-window.addEventListener('mouseover', initLandbot, { once: true });
-window.addEventListener('touchstart', initLandbot, { once: true });
-var myLandbot;
-function initLandbot() {
-  if (!myLandbot) {
-    var s = document.createElement('script');
-    s.type = "module"
-    s.async = true;
-    s.addEventListener('load', function() {
-      var myLandbot = new Landbot.Livechat({
-        configUrl: 'https://storage.googleapis.com/landbot.online/v3/H-2757457-M3YAP6MX84JDE7WS/index.json',
+  // Initialize chatbot on mouseover or touchstart
+  window.addEventListener('mouseover', initLandbot, { once: true });
+  window.addEventListener('touchstart', initLandbot, { once: true });
+  var myLandbot;
+
+  function initLandbot() {
+    if (!myLandbot) {
+      var s = document.createElement('script');
+      s.type = "module"
+      s.async = true;
+      s.addEventListener('load', function() {
+        var myLandbot = new myLandbot.Livechat({
+          configUrl: 'https://storage.googleapis.com/landbot.online/v3/H-2757457-M3YAP6MX84JDE7WS/index.json',
+        });
       });
-    });
-    s.src = 'https://cdn.landbot.io/landbot-3/landbot-3.0.0.mjs';
-    var x = document.getElementsByTagName('script')[0];
-    x.parentNode.insertBefore(s, x);
+      s.src = 'https://cdn.landbot.io/landbot-3/landbot-3.0.0.mjs';
+      var x = document.getElementsByTagName('script')[0];
+      if (x !== null) {
+        const parent = x.parentNode;
+        if (parent !== null) {
+          parent.insertBefore(s, x);
+        } else {
+          console.error('Parent element is null');
+        }
+      } else {
+        console.error('Element x is null');
+      }
+    }
   }
-}
 </script>
 
+<!-- ESTILOS GLOBALES -->
 <style is:global>
+  /* Root CSS variables for consistent styling */
   :root {
     --color-primary: #000000;
     --color-secondary: #ffffff;
@@ -63,46 +80,54 @@ function initLandbot() {
     --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
   }
 
+  /* Global reset for margin and padding */
   * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
   }
 
+  /* Base styles for the HTML document */
   html {
     font-family: 'Inter', sans-serif;
     background-color: var(--color-secondary);
     scroll-behavior: smooth;
   }
 
+  /* Body styles */
   body {
     overflow-x: hidden;
     color: var(--color-text);
     line-height: 1.6;
   }
 
+  /* Image styles */
   img {
     max-width: 100%;
     height: auto;
   }
 
+  /* Anchor styles */
   a {
     color: inherit;
     text-decoration: none;
     transition: all 0.3s ease;
   }
 
+  /* Container styles */
   .container {
     max-width: var(--container-width);
     margin: 0 auto;
     padding: 0 var(--spacing-sm);
   }
 
+  /* Heading styles */
   h1, h2, h3, h4, h5, h6 {
     font-weight: 700;
     line-height: 1.2;
   }
 
+  /* Responsive heading sizes */
   h1 {
     font-size: clamp(2.5rem, 5vw, 4rem);
   }
@@ -115,17 +140,20 @@ function initLandbot() {
     font-size: clamp(1.5rem, 3vw, 2rem);
   }
 
+  /* Grid layout styles */
   .grid {
     display: grid;
     gap: var(--spacing-md);
   }
 
+  /* Fade-in animation styles */
   .fade-in {
     opacity: 0;
     transform: translateY(20px);
     animation: fadeIn 0.8s var(--ease-out-expo) forwards;
   }
 
+  /* Fade-in delay classes */
   .fade-in-delay-1 {
     animation-delay: 0.2s;
   }
@@ -138,6 +166,7 @@ function initLandbot() {
     animation-delay: 0.6s;
   }
 
+  /* Slide-in animations */
   .slide-in-left {
     opacity: 0;
     transform: translateX(-50px);
@@ -150,12 +179,14 @@ function initLandbot() {
     animation: slideInRight 0.8s var(--ease-out-expo) forwards;
   }
 
+  /* Scale-in animation */
   .scale-in {
     opacity: 0;
     transform: scale(0.9);
     animation: scaleIn 0.8s var(--ease-out-expo) forwards;
   }
 
+  /* Keyframes for animations */
   @keyframes fadeIn {
     to {
       opacity: 1;
@@ -184,6 +215,7 @@ function initLandbot() {
     }
   }
 
+  /* Hover effects */
   .hover-lift {
     transition: transform var(--transition-normal) var(--ease-out-expo);
   }
@@ -224,12 +256,14 @@ function initLandbot() {
     }
   }
 
+  /* Media query for hover effects */
   @media (hover: hover) {
     a:hover {
       opacity: 0.7;
     }
   }
 
+  /* Media query for responsive spacing */
   @media (max-width: 768px) {
     :root {
       --spacing-lg: 2rem;

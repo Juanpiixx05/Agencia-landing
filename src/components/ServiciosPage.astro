@@ -1,5 +1,6 @@
 ---
 // src/components/Projects.astro
+// Array of project objects containing details for each service offered.
 const projects = [
   {
     title: "Desarrollo Web Profesional",
@@ -32,46 +33,69 @@ const projects = [
 ];
 ---
 
+<!-- Projects Section -->
 <section id="proyectos" class="projects-section">
+  <!-- Container for projects -->
   <div class="container projects-container">
+    <!-- Section title -->
     <h2 class="section-title">Nuestros Servicios</h2>
+    <!-- Swiper navigation wrapper -->
     <div class="swiper-navigation-wrapper">
+      <!-- Previous button -->
       <div class="swiper-button-prev custom-nav-btn"></div>
+      <!-- Swiper container -->
       <div class="swiper projects-swiper">
+        <!-- Swiper wrapper -->
         <div class="swiper-wrapper">
+          {/* Mapping through the projects array to create a slide for each project */}
           {projects.map((project) => (
+            <!-- Project card -->
             <div class="swiper-slide project-card">
+              <!-- Project image -->
               <div class="project-image" style={`background-image: url(${project.imageUrl})`}></div>
+              <!-- Project content -->
               <div class="project-content">
+                <!-- Project title -->
                 <h3>{project.title}</h3>
+                <!-- Project description -->
                 <p>{project.description}</p>
+                <!-- Project technologies -->
                 <div class="project-technologies">
+                  {/* Mapping through technologies to display each technology used */}
                   {project.technologies.map((tech) => (
+                    <!-- Technology tag -->
                     <span class="tech-tag">{tech}</span>
                   ))}
                 </div>
+                <!-- Project link -->
                 <a href={project.link} class="project-link">Ver Proyecto</a>
               </div>
             </div>
           ))}
         </div>
+        <!-- Swiper pagination -->
         <div class="swiper-pagination"></div>
       </div>
+      <!-- Next button -->
       <div class="swiper-button-next custom-nav-btn"></div>
     </div>
   </div>
 </section>
 
+<!-- SWIPER -->
+<!-- Swiper CSS -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+<!-- Swiper JavaScript -->
 <script is:inline src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<!-- Initialize Swiper -->
 <script is:inline define:vars={{projects}}>
   document.addEventListener('DOMContentLoaded', () => {
+    // Initializing Swiper with configuration options
     const swiper = new Swiper('.projects-swiper', {
       slidesPerView: 1,
       spaceBetween: 30,
       loop: true,
       centeredSlides: true,
-      grabCursor: true,
       pagination: {
         el: '.swiper-pagination',
         clickable: true,
@@ -99,12 +123,15 @@ const projects = [
   });
 </script>
 
+<!-- Styles for the projects section -->
 <style>
+  /* Projects section styles */
   .projects-section {
     background-color: #f9f9f9;
     padding: 4rem 0;
   }
 
+  /* Section title styles */
   .section-title {
     text-align: center;
     margin-bottom: 2rem;
@@ -112,6 +139,7 @@ const projects = [
     color: #333;
   }
 
+  /* Project card styles */
   .project-card {
     background-color: white;
     border-radius: 10px;
@@ -123,10 +151,12 @@ const projects = [
     transition: none;
   }
 
+  /* Project card hover styles */
   .project-card:hover {
     transform: none;
   }
 
+  /* Project image styles */
   .project-image {
     height: 250px;
     background-size: cover;
@@ -134,20 +164,24 @@ const projects = [
     transition: none;
   }
 
+  /* Project content styles */
   .project-content {
     padding: 1.5rem;
   }
 
+  /* Project title styles */
   .project-content h3 {
     margin-bottom: 0.75rem;
     color: #333;
   }
 
+  /* Project description styles */
   .project-content p {
     color: #666;
     margin-bottom: 1rem;
   }
 
+  /* Project technologies styles */
   .project-technologies {
     display: flex;
     flex-wrap: wrap;
@@ -155,6 +189,7 @@ const projects = [
     margin-bottom: 1rem;
   }
 
+  /* Technology tag styles */
   .tech-tag {
     background-color: #f0f0f0;
     padding: 0.25rem 0.5rem;
@@ -163,6 +198,7 @@ const projects = [
     color: #333;
   }
 
+  /* Project link styles */
   .project-link {
     display: inline-block;
     background-color: #007bff;
@@ -173,14 +209,17 @@ const projects = [
     transition: background-color 0.3s ease;
   }
 
+  /* Project link hover styles */
   .project-link:hover {
     background-color: #0056b3;
   }
 
+  /* Projects container styles */
   .projects-container {
     position: relative;
   }
 
+  /* Swiper navigation wrapper styles */
   .swiper-navigation-wrapper {
     position: relative;
     width: 100%;
@@ -191,20 +230,24 @@ const projects = [
     justify-content: space-between;
   }
 
+  /* Swiper styles */
   .projects-swiper {
     width: 100%;
     padding: 20px 0;
   }
 
+  /* Swiper slide styles */
   .swiper-slide {
     opacity: 1;
     transition: none;
   }
 
+  /* Swiper active slide styles */
   .swiper-slide-active {
     opacity: 1;
   }
 
+  /* Custom navigation button styles */
   .custom-nav-btn {
     position: absolute;
     top: 50%;
@@ -220,25 +263,31 @@ const projects = [
     justify-content: center;
   }
 
+  /* Previous button styles */
   .swiper-button-prev {
     left: -25px;
   }
 
+  /* Next button styles */
   .swiper-button-next {
     right: -25px;
   }
 
+  /* Custom navigation button after styles */
   .custom-nav-btn::after {
     font-size: 24px;
     color: #333;
     font-weight: bold;
   }
 
+  /* Media query for max-width 1024px */
   @media (max-width: 1024px) {
+    /* Swiper navigation wrapper styles */
     .swiper-navigation-wrapper {
       padding: 0 20px;
     }
 
+    /* Custom navigation button styles */
     .custom-nav-btn {
       width: 40px;
       height: 40px;
@@ -246,6 +295,7 @@ const projects = [
       transform: none;
     }
 
+    /* Previous and next button styles */
     .swiper-button-prev,
     .swiper-button-next {
       position: relative;
@@ -254,11 +304,13 @@ const projects = [
     }
   }
 
+  /* Swiper button styles */
   .swiper-button-prev,
   .swiper-button-next {
     color: #333 !important;
   }
 
+  /* Swiper pagination bullet active styles */
   .swiper-pagination-bullet-active {
     background-color: #333 !important;
   }

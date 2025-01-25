@@ -1,5 +1,5 @@
 ---
-// src/pages/sobre-nosotros.astro
+// Page for displaying information about the company, using various components
 import Layout from '../layouts/Layout.astro';
 import About from '../components/About.astro';
 import Navbar from '../components/Navbar.astro';
@@ -7,14 +7,18 @@ import Footer from '../components/Footer.astro';
 ---
 
 <Layout title="Sobre Nosotros - EterCore">
+  <!-- Navbar component for site navigation -->
   <Navbar />
   <main>
+    <!-- About component displaying information about the company -->
     <About />
   </main>
+  <!-- Footer component for additional links and copyright information -->
   <Footer />
 </Layout>
 
 <style>
+  /* Styles for the main content area */
   main {
     width: 100%;
     overflow: hidden;

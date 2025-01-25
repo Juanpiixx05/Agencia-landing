@@ -1,17 +1,22 @@
 ---
 ---
 
+---
 <header class="header">
+  <!-- Navigation container -->
   <nav class="container">
+    <!-- Logo section with a link to the homepage -->
     <div class="logo">
       <a href="/">EterCore</a>
     </div>
+    <!-- Navigation links for different sections of the website -->
     <div class="nav-links">
       <a href="/#inicio">Inicio</a>
       <a href="/servicios">Servicios</a>
       <a href="/proyectos">Proyectos</a>
       <a href="/#contacto">Contacto</a>
     </div>
+    <!-- Menu button for mobile view -->
     <button class="menu-button" aria-label="Menu">
       <span></span>
       <span></span>
@@ -20,6 +25,7 @@
 </header>
 
 <style>
+  /* Styles for the header */
   .header {
     position: fixed;
     top: 0;
@@ -31,18 +37,21 @@
     padding: 1.5rem 0;
   }
 
+  /* Navigation styles */
   nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
   }
 
+  /* Logo styles */
   .logo a {
     font-weight: 700;
     font-size: 1.2rem;
     letter-spacing: -0.02em;
   }
 
+  /* Navigation links styles */
   .nav-links {
     display: flex;
     gap: 2rem;
@@ -56,10 +65,12 @@
     transition: color 0.2s ease;
   }
 
+  /* Hover effect for navigation links */
   .nav-links a:hover {
     color: var(--color-primary);
   }
 
+  /* Menu button styles */
   .menu-button {
     display: none;
     background: none;
@@ -68,6 +79,7 @@
     padding: 0.5rem;
   }
 
+  /* Menu button span styles */
   .menu-button span {
     display: block;
     width: 24px;
@@ -80,6 +92,7 @@
     margin-bottom: 6px;
   }
 
+  /* Responsive styles for mobile view */
   @media (max-width: 768px) {
     .nav-links {
       display: none;
@@ -92,10 +105,13 @@
 </style>
 
 <script>
+  // Selecting the menu button and navigation links
   const menuButton = document.querySelector('.menu-button');
   const navLinks = document.querySelector('.nav-links');
 
+  // Adding click event listener to the menu button
   menuButton?.addEventListener('click', () => {
+    // Toggle the visibility of navigation links and active state of the menu button
     navLinks?.classList.toggle('show');
     menuButton.classList.toggle('active');
   });
