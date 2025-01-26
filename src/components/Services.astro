@@ -1,244 +1,252 @@
 ---
-// Array of services, each containing title, category, image, and link.
+// Servicios Component con diseño mejorado
 const services = [
   {
-    title: "Diseño UI/UX",
-    category: "Interfaces intuitivas y experiencias memorables",
-    image: "/images/service1.jpg",
-    link: "/services/service1"
-  },
-  {
-    title: "Branding",
-    category: "Identidad visual única y coherente",
-    image: "/images/service2.jpg",
-    link: "/services/service2"
-  },
-  {
+    icon: "mdi:web",
     title: "Desarrollo Web",
-    category: "Sitios web modernos y responsivos",
-    image: "/images/service3.jpg",
-    link: "/services/service3"
+    description: "Creamos sitios web modernos, responsivos y de alto rendimiento que representan la esencia de tu marca.",
+    color: "#0284c7",  // Azul primario
+    skills: ["Diseño Responsivo", "Optimización SEO", "Experiencia de Usuario"]
   },
   {
+    icon: "mdi:palette",
+    title: "Diseño UX/UI",
+    description: "Diseñamos interfaces intuitivas y atractivas que mejoran la experiencia de usuario y conversión.",
+    color: "#10b981",  // Verde esmeralda
+    skills: ["Wireframing", "Prototipado", "Diseño Centrado en Usuario"]
+  },
+  {
+    icon: "mdi:rocket",
     title: "Marketing Digital",
-    category: "Estrategias efectivas para tu negocio",
-    image: "/images/service4.jpg",
-    link: "/services/service4"
+    description: "Estrategias de marketing digital que aumentan tu visibilidad y conectan con tu audiencia objetivo.",
+    color: "#6366f1",  // Índigo
+    skills: ["Estrategia Digital", "Analítica", "Campañas Personalizadas"]
   }
 ];
 ---
 
-<section class="services">
-  <div class="container">
-    <header class="section-header">
-      <h2 class="fade-in">Nuestros Servicios</h2>
-      <a href="/services" class="view-all">Ver todo</a>
-    </header>
-
+<section class="services" aria-labelledby="services-title">
+  <div class="services-container">
+    <div class="services-header">
+      <h2 id="services-title" class="services-title" data-animate="fade-in">
+        Nuestros Servicios
+      </h2>
+      <p class="services-description" data-animate="slide-up">
+        Soluciones digitales integrales diseñadas para impulsar tu negocio y conectar con tu audiencia.
+      </p>
+    </div>
+    
     <div class="services-grid">
-      {/* Mapping through the services array to create a card for each service */}
       {services.map((service, index) => (
-        <a href={service.link} class="service-card" data-index={index}>
-          <div class="service-image">
-            <img src={service.image} alt={service.title} loading="lazy" />
-            <div class="service-info">
-              <h3>{service.title}</h3>
-              <p>{service.category}</p>
+        <div 
+          class="service-card" 
+          data-animate="card-reveal"
+          style={`--service-color: ${service.color}`}
+        >
+          <div class="service-icon" style={`color: ${service.color}`}>
+            <iconify-icon icon={service.icon}></iconify-icon>
+          </div>
+          <div class="service-content">
+            <h3 class="service-title">{service.title}</h3>
+            <p class="service-description">{service.description}</p>
+            <div class="service-skills">
+              {service.skills.map((skill) => (
+                <span class="service-skill">{skill}</span>
+              ))}
             </div>
           </div>
-        </a>
+          <a href={`/servicios/${service.title.toLowerCase().replace(/\s+/g, '-')}`} class="service-link">
+            Más información
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+            </svg>
+          </a>
+        </div>
       ))}
-    </div>
-    <!-- Manifesto section explaining the company's mission and vision -->
-    <div class="manifesto fade-in">
-      <p class="fade-in">Creamos soluciones únicas, historias y experiencias que las audiencias aman.</p>
-      <p class="fade-in">Porque las soluciones que aman no solo inspiran. Construyen lealtad, entregan valor y generan crecimiento.</p>
-      <p class="fade-in">Usamos la creatividad para servir a tus ambiciones comerciales.</p>
     </div>
   </div>
 </section>
 
 <style>
-  /* Styles for the services section */
   .services {
-    padding: var(--spacing-xl) 0;
-  }
-
-  .section-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    margin-bottom: var(--spacing-lg);
-  }
-
-  .view-all {
-    font-size: 1rem;
-    font-weight: 500;
     position: relative;
-    padding-bottom: 4px;
-    opacity: 0;
-    animation: fadeIn 0.8s ease-out forwards;
-    animation-delay: 0.3s;
+    background: linear-gradient(to bottom, #f8fafc, #ffffff);
+    padding: 4rem 0;
   }
 
-  .view-all::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 1px;
-    background-color: currentColor;
-    transform: scaleX(0);
-    transform-origin: right;
-    transition: transform 0.6s var(--ease-out-expo);
+  .services-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
   }
 
-  .view-all:hover::after {
-    transform: scaleX(1);
-    transform-origin: left;
+  .services-header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  .services-title {
+    font-size: clamp(2.5rem, 4vw, 3.5rem);
+    font-weight: 800;
+    color: #0c4a6e;
+    margin-bottom: 1rem;
+    letter-spacing: -0.025em;
+  }
+
+  .services-description {
+    max-width: 800px;
+    margin: 0 auto;
+    color: #4b5563;
+    font-size: clamp(1rem, 1.2vw, 1.25rem);
+    line-height: 1.6;
   }
 
   .services-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: var(--spacing-lg);
-    margin-bottom: var(--spacing-xl);
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
   }
 
   .service-card {
+    background: white;
+    border-radius: 1rem;
+    box-shadow: 0 10px 25px rgba(12, 74, 110, 0.1);
+    padding: 2rem;
+    transition: all 0.4s ease;
     position: relative;
     overflow: hidden;
+    border: 1px solid transparent;
   }
 
-  .service-image {
-    position: relative;
-    overflow: hidden;
+  .service-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 35px rgba(12, 74, 110, 0.15);
+    border-color: var(--service-color);
   }
 
-  .service-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transform: scale(1);
-    transition: filter 0.3s ease, transform 0.6s var(--ease-out-expo);
+  .service-icon {
+    font-size: 3rem;
+    margin-bottom: 1.5rem;
+    opacity: 0.8;
+    transition: opacity 0.3s ease;
   }
 
-  .service-image:hover img {
-    filter: blur(5px);
-    transform: scale(1.05);
-  }
-
-  .service-image:hover {
-    backdrop-filter: blur(10px);
-    position: relative;
-  }
-
-  .service-info {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: white;
-    text-align: center;
-    background: none;
-    padding: 0;
-    z-index: 1;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.3s ease, visibility 0.3s ease;
-  }
-
-  .service-card:hover .service-info {
+  .service-card:hover .service-icon {
     opacity: 1;
-    visibility: visible;
   }
 
-  .manifesto {
-    max-width: 800px;
-    margin: 0 auto;
-    text-align: center;
+  .service-content {
+    margin-bottom: 1.5rem;
+  }
+
+  .service-title {
     font-size: 1.5rem;
-    line-height: 1.4;
-    padding: 40px;
-    margin-top: 40px;
+    font-weight: 700;
+    color: #0c4a6e;
+    margin-bottom: 1rem;
   }
 
-  .manifesto p {
-    margin-bottom: var(--spacing-md);
+  .service-description {
+    color: #4b5563;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+  }
+
+  .service-skills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .service-skill {
+    background-color: rgba(var(--service-color-rgb), 0.1);
+    color: var(--service-color);
+    padding: 0.25rem 0.75rem;
+    border-radius: 1rem;
+    font-size: 0.8rem;
+    font-weight: 500;
+  }
+
+  .service-link {
+    display: flex;
+    align-items: center;
+    color: var(--service-color);
+    font-weight: 600;
+    text-decoration: none;
+    gap: 0.5rem;
+    transition: transform 0.3s ease;
+  }
+
+  .service-link svg {
+    width: 1.25rem;
+    height: 1.25rem;
+    transition: transform 0.3s ease;
+  }
+
+  .service-link:hover {
+    transform: translateX(5px);
+  }
+
+  .service-link:hover svg {
+    transform: translateX(3px);
+  }
+
+  /* Animaciones */
+  [data-animate="fade-in"] {
+    opacity: 0;
+    animation: fadeIn 1s forwards ease-out;
+  }
+
+  [data-animate="slide-up"] {
     opacity: 0;
     transform: translateY(20px);
-    animation: slideUp 0.8s var(--ease-out-expo) forwards;
+    animation: slideUp 1s forwards ease-out;
   }
 
-  .manifesto p:nth-child(1) { animation-delay: 0.8s; }
-  .manifesto p:nth-child(2) { animation-delay: 1s; }
-  .manifesto p:nth-child(3) { animation-delay: 1.2s; }
-
-  .fade-in {
+  [data-animate="card-reveal"] {
     opacity: 0;
-    transition: opacity 0.5s ease-in-out;
-  }
-
-  .fade-in.visible {
-    opacity: 1;
+    transform: scale(0.9);
+    animation: cardReveal 0.8s forwards ease-out;
   }
 
   @keyframes fadeIn {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
+    to { opacity: 1; }
   }
 
   @keyframes slideUp {
-    from {
-      opacity: 0;
-      transform: translateY(30px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
+    to { 
+      opacity: 1; 
+      transform: translateY(0); 
     }
   }
 
-  @media (max-width: 768px) {
-    .services-grid {
-      grid-template-columns: 1fr;
-      gap: var(--spacing-md);
-    }
-
-    .manifesto {
-      font-size: 1.2rem;
+  @keyframes cardReveal {
+    to { 
+      opacity: 1;
+      transform: scale(1);
     }
   }
 </style>
 
 <script>
-  // Adding fade-in class to the manifesto element for animation
-  const manifestoElement = document.querySelector('.manifesto');
-  if (manifestoElement !== null && manifestoElement.classList) {
-    manifestoElement.classList.add('fade-in');
-  }
-
-  // Intersection observer to trigger animations when the manifesto comes into view
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-        observer.unobserve(entry.target);
-      }
+  document.addEventListener('DOMContentLoaded', () => {
+    const serviceCards = document.querySelectorAll('.service-card');
+    
+    serviceCards.forEach(card => {
+      const color = card.style.getPropertyValue('--service-color');
+      const rgbColor = hexToRgb(color);
+      card.style.setProperty('--service-color-rgb', `${rgbColor.r}, ${rgbColor.g}, ${rgbColor.b}`);
     });
-  }, {
-    threshold: 1.0
-  });
 
-  // Observing the manifesto element
-  if (manifestoElement !== null && manifestoElement.classList) {
-    observer.observe(manifestoElement);
-  } else {
-    console.warn('Element .manifesto not found');
-  }
+    function hexToRgb(hex) {
+      const shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
+      hex = hex.replace(shorthandRegex, (m, r, g, b) => r + r + g + g + b + b);
+      const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+      return result ? {
+        r: parseInt(result[1], 16),
+        g: parseInt(result[2], 16),
+        b: parseInt(result[3], 16)
+      } : null;
+    }
+  });
 </script>
