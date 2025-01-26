@@ -35,7 +35,7 @@ const {
       <img 
         src={image} 
         alt={`Fondo Hero ${index + 1}`} 
-        class={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ease-in-out hero-bg-image ${index === 0 ? 'opacity-100' : 'opacity-0'}`}
+        class={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ease-in-out hero-bg-image ${index === 0 ? 'active' : ''}`}
         data-index={index}
       />
     ))}
@@ -74,43 +74,86 @@ const {
 
 <script define:vars={{backgroundImages}}>
   document.addEventListener('DOMContentLoaded', () => {
-    const heroSection = document.getElementById('hero-section');
+    const hero = document.getElementById('hero-section');
     const heroBackground = document.getElementById('hero-background');
-    const backgroundImgElements = document.querySelectorAll('.hero-bg-image');
+    const images = document.querySelectorAll('.hero-bg-image') as NodeListOf<HTMLElement>;
     
     let currentImageIndex = 0;
+    let mouseX = 0;
+    let lastMouseX = mouseX;
+    let lastTimestamp = Date.now();
+    const MOVEMENT_THRESHOLD = 50; // Umbral para detectar movimiento
+    const totalImages = images.length;
 
-    function updateBackgroundImage(mouseX) {
-      const sectionWidth = heroSection.clientWidth;
-      const mousePercentage = mouseX / sectionWidth;
-      const newIndex = Math.floor(mousePercentage * backgroundImages.length);
+    // Activar la primera imagen
+    if (images.length > 0) {
+      images[0].classList.add('active');
+    }
 
-      if (newIndex !== currentImageIndex && newIndex < backgroundImages.length) {
-        // Ocultar imagen actual
-        backgroundImgElements[currentImageIndex].style.opacity = '0';
-        
-        // Mostrar nueva imagen
-        backgroundImgElements[newIndex].style.opacity = '1';
-        
-        currentImageIndex = newIndex;
+    // Función para cambiar la imagen basado en la posición del mouse
+    function changeImageBasedOnMousePosition(mouseX: number) {
+      const heroWidth = hero.clientWidth;
+      const sectionWidth = heroWidth / totalImages;
+      let newImageIndex = Math.floor(mouseX / sectionWidth);
+
+      // Asegurarse de que el índice esté dentro del rango
+      if (newImageIndex < 0) newImageIndex = 0;
+      if (newImageIndex >= totalImages) newImageIndex = totalImages - 1;
+
+      // Solo cambiar si la imagen es diferente
+      if (newImageIndex !== currentImageIndex) {
+        images[currentImageIndex].classList.remove('active');
+        currentImageIndex = newImageIndex;
+        images[currentImageIndex].classList.add('active');
       }
     }
 
-    heroSection.addEventListener('mousemove', (event) => {
-      const rect = heroSection.getBoundingClientRect();
-      const mouseX = event.clientX - rect.left;
-      updateBackgroundImage(mouseX);
-    });
+    if (hero) {
+      hero.addEventListener('mousemove', function(this: HTMLElement, e: MouseEvent): void {
+        const newMouseX = e.clientX;
+        const currentTime = Date.now();
+        const timeDiff = currentTime - lastTimestamp;
+        const distance = newMouseX - lastMouseX;
+        const speed = Math.abs(distance / timeDiff); // Speed in pixels per millisecond
 
-    // Reiniciar al salir del hero
-    heroSection.addEventListener('mouseleave', () => {
-      backgroundImgElements.forEach((img, index) => {
-        img.style.opacity = index === 0 ? '1' : '0';
+        // Define a speed threshold
+        const SPEED_THRESHOLD = 0.5; // Adjust this value as needed
+
+        // Change image based on speed
+        if (speed > SPEED_THRESHOLD) {
+          changeImageBasedOnMousePosition(newMouseX);
+        }
+
+        lastMouseX = newMouseX;
+        lastTimestamp = currentTime;
+      }, { passive: true });
+
+      // Reiniciar al salir del hero
+      hero.addEventListener('mouseleave', () => {
+        images.forEach((img, index) => {
+          img.classList.toggle('active', index === 0);
+        });
+        currentImageIndex = 0;
       });
-      currentImageIndex = 0;
-    });
+    }
   });
 </script>
+
+<style>
+  .hero-bg-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+  }
+  .hero-bg-image.active {
+    opacity: 1;
+  }
+</style>
 
 <style>
   .hero-background {
