@@ -1,120 +1,96 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/* Variable Typography Animations */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
 
 :root {
-  /* Definición de variables tipográficas */
-  --font-primary: 'Inter', system-ui, sans-serif;
-  
-  /* Escalas tipográficas más sutiles */
-  --size-xs: clamp(0.75rem, 0.5vw, 0.875rem);
-  --size-sm: clamp(0.875rem, 0.75vw, 1rem);
-  --size-base: clamp(1rem, 1vw, 1.125rem);
-  --size-lg: clamp(1.125rem, 1.5vw, 1.25rem);
-  --size-xl: clamp(1.5rem, 2vw, 1.75rem);
-  --size-2xl: clamp(1.75rem, 3vw, 2.25rem);
-  --size-3xl: clamp(2.25rem, 4vw, 3rem);
+  /* Variable Font Weight Range */
+  --font-weight-thin: 100;
+  --font-weight-light: 300;
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-bold: 700;
+  --font-weight-black: 900;
 }
 
-@layer base {
-  html {
-    scroll-behavior: smooth;
-    text-rendering: optimizeLegibility;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
-
-  body {
-    font-family: var(--font-primary);
-    @apply text-neutral-700 bg-neutral-50;
-    line-height: 1.6;
-    letter-spacing: -0.015em;
-  }
+/* Base Variable Text Styles */
+.variable-text {
+  font-family: 'Inter', sans-serif;
+  font-variation-settings: 'wght' var(--font-weight-regular);
+  transition: 
+    font-variation-settings 0.3s ease,
+    transform 0.3s ease;
 }
 
-@layer components {
-  /* Títulos futuristas geométricos */
-  .text-display {
-    font-family: var(--font-primary);
-    font-weight: 700;
-    line-height: 1.2;
-    letter-spacing: -0.03em;
-    @apply text-neutral-900;
-    transition: color 0.3s ease;
-  }
+/* Hover Effects */
+.variable-text:hover {
+  font-variation-settings: 'wght' var(--font-weight-bold);
+  transform: scale(1.02);
+}
 
-  .text-title {
-    font-size: var(--size-2xl);
-    @apply text-display;
+/* Weight Pulse Animation */
+@keyframes weightPulse {
+  0%, 100% { 
+    font-variation-settings: 'wght' var(--font-weight-light);
   }
-
-  /* Subtítulos delgados y minimalistas */
-  .text-subtitle {
-    font-size: var(--size-xl);
-    font-weight: 600;
-    @apply text-neutral-800;
-  }
-
-  /* Texto de cuerpo funcional */
-  .text-body {
-    font-size: var(--size-base);
-    font-weight: 400;
-    @apply text-neutral-600 leading-relaxed;
-  }
-
-  /* Texto pequeño y técnico */
-  .text-caption {
-    font-size: var(--size-sm);
-    font-weight: 500;
-    @apply text-neutral-500 uppercase tracking-wider;
-  }
-
-  /* Estados interactivos */
-  .interactive-text {
-    position: relative;
-    cursor: pointer;
-    transition: all 0.3s ease;
-  }
-
-  .interactive-text::after {
-    content: '';
-    position: absolute;
-    bottom: -2px;
-    left: 0;
-    width: 0;
-    height: 2px;
-    background-color: theme('colors.primary.600');
-    transition: width 0.3s ease;
-  }
-
-  .interactive-text:hover::after {
-    width: 100%;
-  }
-
-  .interactive-text:hover {
-    @apply text-primary-600;
+  50% { 
+    font-variation-settings: 'wght' var(--font-weight-bold);
   }
 }
 
-@layer utilities {
-  /* Utilidades dinámicas */
-  .text-gradient {
-    background: linear-gradient(45deg, #0284c7, #10b981);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
+.animate-weight-pulse {
+  animation: weightPulse 2s infinite;
+}
 
-  .text-glitch {
-    animation: glitch 1s infinite;
+/* Letter Scatter Effect */
+@keyframes letterScatter {
+  0% { 
+    transform: translateY(0) rotate(0deg);
+    opacity: 1;
   }
+  50% { 
+    transform: translateY(-10px) rotate(15deg);
+    opacity: 0.7;
+  }
+  100% { 
+    transform: translateY(0) rotate(0deg);
+    opacity: 1;
+  }
+}
 
-  @keyframes glitch {
-    0%, 100% { transform: translate(0); }
-    10% { transform: translate(-2px, -2px); }
-    20% { transform: translate(2px, 2px); }
-    30% { transform: translate(-2px, 2px); }
-    40% { transform: translate(2px, -2px); }
+.letter-scatter span {
+  display: inline-block;
+  transition: all 0.3s ease;
+}
+
+.letter-scatter:hover span {
+  animation: letterScatter 0.5s ease-in-out;
+}
+
+/* Gradient Text Effect */
+.gradient-text {
+  background: linear-gradient(
+    45deg, 
+    var(--color-primary), 
+    var(--color-accent1)
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  transition: background 0.3s ease;
+}
+
+.gradient-text:hover {
+  background: linear-gradient(
+    45deg, 
+    var(--color-accent1), 
+    var(--color-primary)
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+}
+
+/* Responsive Typography */
+@media (max-width: 768px) {
+  .variable-text {
+    font-size: 90%;
   }
 }

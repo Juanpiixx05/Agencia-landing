@@ -1,5 +1,4 @@
 ---
-// Layout component for the entire application
 import '../styles/typography.css';
 
 interface Props {
@@ -19,56 +18,50 @@ const { title } = Astro.props;
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet" />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
-    <!-- Preconnecting to Google Fonts for better performance -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Preload de la primera imagen del hero -->
+    <link rel="preload" href="/images/service1.jpg" as="image" importance="high">
   </head>
-  <body class="font-sans bg-white dark:bg-gray-900 text-gray-900 dark:text-white antialiased">
-    <!-- Main content will be injected here -->
-    <slot />
-    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+  <body class="font-sans text-gray-900 dark:text-white antialiased">
+    <div id="root">
+      <slot />
+    </div>
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js" async defer crossorigin="anonymous"></script>
   </body>
 </html>
 
-<!-- CHATBOT -->
+<!-- CHATBOT (versión optimizada) -->
 <script>
-  // Initialize chatbot on mouseover or touchstart
-  window.addEventListener('mouseover', initLandbot, { once: true });
-  window.addEventListener('touchstart', initLandbot, { once: true });
-  var myLandbot;
-
-  function initLandbot() {
-    if (!myLandbot) {
-      var s = document.createElement('script');
-      s.type = "module"
-      s.async = true;
-      s.addEventListener('load', function() {
-        var myLandbot = new myLandbot.Livechat({
+window.addEventListener('DOMContentLoaded', () => {
+  const loadLandbot = () => {
+    const existingScript = document.querySelector('script[src="https://cdn.landbot.io/landbot-3/landbot-3.0.0.mjs"]');
+    if (!existingScript) {
+      const script = document.createElement('script');
+      script.type = "module";
+      script.src = 'https://cdn.landbot.io/landbot-3/landbot-3.0.0.mjs';
+      script.onload = () => {
+        new Landbot.Livechat({
           configUrl: 'https://storage.googleapis.com/landbot.online/v3/H-2757457-M3YAP6MX84JDE7WS/index.json',
         });
-      });
-      s.src = 'https://cdn.landbot.io/landbot-3/landbot-3.0.0.mjs';
-      var x = document.getElementsByTagName('script')[0];
-      if (x !== null) {
-        const parent = x.parentNode;
-        if (parent !== null) {
-          parent.insertBefore(s, x);
-        } else {
-          console.error('Parent element is null');
-        }
-      } else {
-        console.error('Element x is null');
-      }
+      };
+      document.body.appendChild(script);
     }
-  }
+  };
+
+  const interactionEvents = ['mouseover', 'touchstart'];
+  interactionEvents.forEach(event => {
+    window.addEventListener(event, loadLandbot, { once: true, passive: true });
+  });
+});
 </script>
 
-<!-- ESTILOS GLOBALES -->
+<!-- ESTILOS GLOBALES ACTUALIZADOS -->
 <style is:global>
-  /* Root CSS variables for consistent styling */
   :root {
     --color-primary: #000000;
     --color-secondary: #ffffff;
+    --color-hero-overlay: rgba(0, 0, 0, 0.3);
     --color-text: #333333;
     --color-text-light: #666666;
     --container-width: 1440px;
@@ -83,206 +76,66 @@ const { title } = Astro.props;
     --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
   }
 
-  /* Global reset for margin and padding */
   * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
   }
 
-  /* Base styles for the HTML document */
   html {
     font-family: 'Inter', sans-serif;
-    background-color: var(--color-secondary);
     scroll-behavior: smooth;
+    background-color: var(--color-secondary);
   }
 
-  /* Body styles */
   body {
     overflow-x: hidden;
     color: var(--color-text);
     line-height: 1.6;
+    isolation: isolate;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
   }
 
-  /* Image styles */
-  img {
+  #root {
+    flex: 1;
+    position: relative;
+    z-index: 0;
+  }
+
+  img, .background-image {
     max-width: 100%;
     height: auto;
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
   }
 
-  /* Anchor styles */
-  a {
-    color: inherit;
-    text-decoration: none;
-    transition: all 0.3s ease;
-  }
-
-  /* Container styles */
   .container {
     max-width: var(--container-width);
     margin: 0 auto;
     padding: 0 var(--spacing-sm);
   }
 
-  /* Heading styles */
-  h1, h2, h3, h4, h5, h6 {
-    font-weight: 700;
-    line-height: 1.2;
-  }
-
-  /* Responsive heading sizes */
-  h1 {
-    font-size: clamp(2.5rem, 5vw, 4rem);
-  }
-
-  h2 {
-    font-size: clamp(2rem, 4vw, 3rem);
-  }
-
-  h3 {
-    font-size: clamp(1.5rem, 3vw, 2rem);
-  }
-
-  /* Grid layout styles */
-  .grid {
-    display: grid;
-    gap: var(--spacing-md);
-  }
-
-  /* Fade-in animation styles */
-  .fade-in {
-    opacity: 0;
-    transform: translateY(20px);
-    animation: fadeIn 0.8s var(--ease-out-expo) forwards;
-  }
-
-  /* Fade-in delay classes */
-  .fade-in-delay-1 {
-    animation-delay: 0.2s;
-  }
-
-  .fade-in-delay-2 {
-    animation-delay: 0.4s;
-  }
-
-  .fade-in-delay-3 {
-    animation-delay: 0.6s;
-  }
-
-  /* Slide-in animations */
-  .slide-in-left {
-    opacity: 0;
-    transform: translateX(-50px);
-    animation: slideInLeft 0.8s var(--ease-out-expo) forwards;
-  }
-
-  .slide-in-right {
-    opacity: 0;
-    transform: translateX(50px);
-    animation: slideInRight 0.8s var(--ease-out-expo) forwards;
-  }
-
-  /* Scale-in animation */
-  .scale-in {
-    opacity: 0;
-    transform: scale(0.9);
-    animation: scaleIn 0.8s var(--ease-out-expo) forwards;
-  }
-
-  /* Keyframes for animations */
-  @keyframes fadeIn {
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  @keyframes slideInLeft {
-    to {
-      opacity: 1;
-      transform: translateX(0);
-    }
-  }
-
-  @keyframes slideInRight {
-    to {
-      opacity: 1;
-      transform: translateX(0);
-    }
-  }
-
-  @keyframes scaleIn {
-    to {
-      opacity: 1;
-      transform: scale(1);
-    }
-  }
-
-  /* Hover effects */
-  .hover-lift {
-    transition: transform var(--transition-normal) var(--ease-out-expo);
-  }
-
-  .hover-lift:hover {
-    transform: translateY(-8px);
-  }
-
-  .hover-scale {
-    transition: transform var(--transition-normal) var(--ease-out-expo);
-  }
-
-  .hover-scale:hover {
-    transform: scale(1.05);
-  }
-
-  .text-reveal {
+  /* Ajustes clave para el hero */
+  .hero {
     position: relative;
-    overflow: hidden;
+    z-index: 0;
   }
 
-  .text-reveal::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: var(--color-secondary);
-    transform: scaleX(1);
-    transform-origin: right;
-    animation: revealText 1.2s var(--ease-out-expo) forwards;
+  .hero .background-container {
+    z-index: -1;
   }
 
-  @keyframes revealText {
-    to {
-      transform: scaleX(0);
+  /* Optimización de animaciones */
+  @media (prefers-reduced-motion: reduce) {
+    * {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
     }
   }
 
-  /* Media query for hover effects */
-  @media (hover: hover) {
-    a:hover {
-      opacity: 0.7;
-    }
-  }
-
-  /* Media query for responsive spacing */
-  @media (max-width: 768px) {
-    :root {
-      --spacing-lg: 2rem;
-      --spacing-xl: 4rem;
-    }
-  }
-
-  /* Estilos globales */
-  html {
-    scroll-behavior: smooth;
-  }
-
-  body {
-    font-family: 'Inter', sans-serif;
-    @apply text-base leading-relaxed;
-  }
-
-  /* Estilos de selección eliminados */
+  /* Resto de estilos... (mantener los que ya tienes) */
 </style>
